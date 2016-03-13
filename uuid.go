@@ -76,6 +76,10 @@ func (uuid UUID) Exists() bool {
 	return uuid[6] >= 0x40 && uuid[6] < 0x50
 }
 
+func (uuid UUID) Keys() []interface{} {
+	return []interface{}{uuid}
+}
+
 var _ sql.Modifier = UUID{}
 
 func (uuid UUID) Modify(table *sql.TableElem) error {

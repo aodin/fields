@@ -20,6 +20,10 @@ func (serial Serial) GetID() uint64 {
 	return serial.ID
 }
 
+func (serial Serial) Keys() []interface{} {
+	return []interface{}{serial.ID}
+}
+
 var _ sql.Modifier = Serial{}
 
 // Modify implements the sol.Modifier interface
