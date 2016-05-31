@@ -74,7 +74,7 @@ func (fk *ImmutableFK) UnmarshalJSON(b []byte) error {
 }
 
 // Modify implements the sol.Modifier interface
-func (fk ImmutableFK) Modify(table *sol.TableElem) error {
+func (fk ImmutableFK) Modify(table sol.Tabular) error {
 	return sol.ForeignKey(
 		fk.Name,
 		fk.Table.C("id"),

@@ -3,8 +3,8 @@ package fields
 import (
 	"time"
 
-	sql "github.com/aodin/sol"
-	pg "github.com/aodin/sol/postgres"
+	"github.com/aodin/sol"
+	"github.com/aodin/sol/postgres"
 	"github.com/aodin/sol/types"
 )
 
@@ -56,14 +56,14 @@ func (ts Timestamp) LastActivity() time.Time {
 	return ts.CreatedAt
 }
 
-var _ sql.Modifier = Timestamp{}
+var _ sol.Modifier = Timestamp{}
 
-func (ts Timestamp) Modify(table *sql.TableElem) error {
+func (ts Timestamp) Modify(table sol.Tabular) error {
 	// TODO Determine the column names from the struct's db tags
-	columns := []sql.ColumnElem{
-		sql.Column("created_at", pg.Timestamp().NotNull().Default(pg.Now)),
-		sql.Column("updated_at", types.Timestamp()),
-		sql.Column("deleted_at", types.Timestamp()),
+	columns := []sol.ColumnElem{
+		sol.Column("created_at", postgres.Timestamp().NotNull().Default(postgres.Now)),
+		sol.Column("updated_at", types.Timestamp()),
+		sol.Column("deleted_at", types.Timestamp()),
 	}
 	for _, column := range columns {
 		if err := column.Modify(table); err != nil {

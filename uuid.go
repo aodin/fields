@@ -7,8 +7,8 @@ import (
 	"io"
 	"log"
 
-	sql "github.com/aodin/sol"
-	pg "github.com/aodin/sol/postgres"
+	"github.com/aodin/sol"
+	"github.com/aodin/sol/postgres"
 )
 
 // Copyright 2011 Google Inc.  All rights reserved.
@@ -16,7 +16,7 @@ import (
 // UUID code is a variant of code.google.com/p/go-uuid
 // Added database driver and restriction to v4
 
-var UUIDv4 = pg.UUID().NotNull()
+var UUIDv4 = postgres.UUID().NotNull()
 
 type UUID [16]byte
 
@@ -80,10 +80,10 @@ func (uuid UUID) Keys() []interface{} {
 	return []interface{}{uuid}
 }
 
-var _ sql.Modifier = UUID{}
+var _ sol.Modifier = UUID{}
 
-func (uuid UUID) Modify(table *sql.TableElem) error {
-	return sql.Column("uuid", UUIDv4).Modify(table)
+func (uuid UUID) Modify(table sol.Tabular) error {
+	return sol.Column("uuid", UUIDv4).Modify(table)
 }
 
 // http://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_.28random.29
