@@ -14,9 +14,7 @@ func TestTimestamp(t *testing.T) {
 	if !ts.LastActivity().Equal(then) {
 		t.Errorf("Last activity should be equal to its creation")
 	}
-	if ts.IsDeleted() {
-		t.Errorf("Timestamp should not be deleted")
-	}
+
 	if ts.WasUpdated() {
 		t.Errorf("Timestamp should not be updated")
 	}
@@ -25,17 +23,8 @@ func TestTimestamp(t *testing.T) {
 		t.Errorf("Timestamp should be one day old")
 	}
 
-	ts.UpdatedAt = &again
+	ts.UpdatedAt = again
 	if !ts.LastActivity().Equal(again) {
 		t.Errorf("Last activity should be equal to its update")
-	}
-
-	ts.setDeletedAt(now)
-	if !ts.LastActivity().Equal(now) {
-		t.Errorf("Last activity should be equal to now")
-	}
-
-	if !ts.IsDeleted() {
-		t.Errorf("Timestamp should be deleted")
 	}
 }
