@@ -5,7 +5,6 @@ import (
 
 	"github.com/aodin/sol"
 	"github.com/aodin/sol/postgres"
-	"github.com/aodin/sol/types"
 )
 
 // Timestamp records create and update timestamps.
@@ -43,8 +42,14 @@ var _ sol.Modifier = Timestamp{}
 func (ts Timestamp) Modify(table sol.Tabular) error {
 	// TODO Determine the column names from the struct's db tags
 	columns := []sol.ColumnElem{
-		sol.Column("created_at", postgres.Timestamp().NotNull().Default(postgres.Now)),
-		sol.Column("updated_at", types.Timestamp().NotNull()),
+		sol.Column(
+			"created_at",
+			postgres.Timestamp().WithTimezone().NotNull().Default(postgres.Now),
+		),
+		sol.Column(
+			"updated_at",
+			postgres.Timestamp().WithTimezone().NotNull(),
+		),
 	}
 	for _, column := range columns {
 		if err := column.Modify(table); err != nil {

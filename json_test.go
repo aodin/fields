@@ -28,4 +28,16 @@ func TestJSON(t *testing.T) {
 	if j.Get("nil") != "<nil>" {
 		t.Errorf("unexpected nil value: %s != <nil>", j.Get("nil"))
 	}
+
+	num, err := j.Int64("int")
+	if err != nil {
+		t.Errorf("unexpected error: %s", err)
+	}
+	if num != 1 {
+		t.Errorf("unexpected result: 1 != %d", num)
+	}
+
+	if _, err := j.Int64("float"); err == nil {
+		t.Errorf("Int64() should have errored with a float")
+	}
 }
