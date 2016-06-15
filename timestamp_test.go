@@ -23,7 +23,12 @@ func TestTimestamp(t *testing.T) {
 		t.Errorf("Timestamp should be one day old")
 	}
 
-	ts.UpdatedAt = again
+	ts.SetUpdatedAt(again)
+
+	if !ts.WasUpdated() {
+		t.Errorf("Timestamp should be updated")
+	}
+
 	if !ts.LastActivity().Equal(again) {
 		t.Errorf("Last activity should be equal to its update")
 	}
